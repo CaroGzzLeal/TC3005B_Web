@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); 
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            alert(`¡Gracias por tus comentarios ${name}. Te contactaremos por correo a ${email} en caso de ser necesario.`);
+            
+            document.getElementById('contact-form').reset();
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Contact</h1>
+
+    <form id="contact-form" onsubmit="submitForm(event)">
+        <label for="subject">Asunto:</label><br>
+        <input type="text" id="subject" name="subject" required><br>
+
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="comments">Comentarios:</label><br>
+        <textarea id="comments" name="comments" required></textarea><br>
+
+        <label for="email">Correo electrónico:</label><br>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="phone">Número de teléfono:</label><br>
+        <input type="tel" id="phone" name="phone" required><br>
+
+        <br>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
