@@ -3,7 +3,9 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import Image from 'next/image';
-import { Character, getCharacterById, goToCharacters, goToFavorites } from '../../api/character';
+import { getCharacterById, goToCharacters, goToFavorites } from '@/actions/actions';
+import { Character } from '../../api/character';
+
 
 export default function CharacterPage({ params }: { params: { characterId: number } }) {
     const [character, setCharacter] = useState<Character>();

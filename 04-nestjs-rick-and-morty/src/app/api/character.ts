@@ -1,6 +1,44 @@
-"use server"
 
-import { redirect } from 'next/navigation'
+import { z } from 'zod'
+
+export const ZCharacter = z.object({
+    id: z.number(),
+    name: z.string(),
+    status: z.string(),
+    species: z.string(),
+    type: z.string(),
+    gender: z.string(),
+    origin: z.object({
+        name: z.string(),
+        url: z.string(),
+    }),
+    location: z.object({
+        name: z.string(),
+        url: z.string(),
+    }),
+    image : z.string(),
+    episode: z.array(z.string()),
+    url: z.string(),
+    created: z.string(),
+})
+
+export const ZCharacterResponse = z.object({
+    info: z.object({
+      count: z.number(),
+      pages: z.number(),
+      next: z.string(),
+      prev: z.string(),
+    }),
+    results: z.array(ZCharacter)
+})
+
+export type CharacterResponse = z.infer<typeof ZCharacterResponse>
+export type Character = z.infer<typeof ZCharacter>
+
+
+
+
+/*
 
 export interface Character {
     id: number;
@@ -23,6 +61,7 @@ export interface Character {
     created: string;
 }
 
+
 export interface CharacterResponse {
     map(arg0: (character: any) => import("react").JSX.Element): import("react").ReactNode;
     info: {
@@ -31,32 +70,7 @@ export interface CharacterResponse {
       next: string;
       prev: string;
     };
-    results: Character[];
+    results: typeof Character[];
 }
 
-export async function getCharacters(): Promise<CharacterResponse> {
-    const res = await fetch("https://rickandmortyapi.com/api/character");
-    return res.json();
-}
-
-export async function getCharacterById(id: number): Promise<Character> {
-    const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
-    return res.json();
-}
-
-export async function getCharactersByIds(ids: number[]): Promise<Character[] | Character> {
-    const response = await fetch(`https://rickandmortyapi.com/api/character/${ids.join(",")}`);
-    return response.json();
-}
-
-export async function goToCharacters() {
-    redirect('/');
-}
-
-export async function goToFavorites() {
-    redirect('/favorites');
-}
-
-export async function goToCharacter(id: number) {
-    redirect(`/character/${id}`)
-}
+*/

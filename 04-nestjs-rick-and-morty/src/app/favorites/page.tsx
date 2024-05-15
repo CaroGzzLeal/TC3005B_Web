@@ -1,6 +1,7 @@
 "use client"
 
-import { goToCharacters, goToFavorites, getCharactersByIds, Character } from '../api/character';
+import { goToCharacters, goToFavorites, getCharactersByIds } from '@/actions/actions';
+import { Character } from '../api/character';
 import { useState, useEffect } from "react";
 import CharacterCard from '../components/CharacterCard';
 
@@ -16,6 +17,7 @@ export default function Page () {
             setFavorites(JSON.parse(favoritesTemp));
           }
     }, []);
+    
 
 
   useEffect(() => {

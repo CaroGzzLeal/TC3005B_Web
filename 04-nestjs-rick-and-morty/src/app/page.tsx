@@ -1,7 +1,8 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import { getCharacters, CharacterResponse, goToCharacters, goToFavorites } from './api/character';
+import { getCharacters, goToCharacters, goToFavorites } from '@/actions/actions';
+import { CharacterResponse } from './api/character';
 import CharacterCard from './components/CharacterCard';
 
 export default function Page () {

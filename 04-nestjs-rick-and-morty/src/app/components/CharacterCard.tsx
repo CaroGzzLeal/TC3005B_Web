@@ -1,6 +1,6 @@
 import { Character } from "../api/character"
 import Image from "next/image";
-import { goToCharacter } from "../api/character";
+import { goToCharacter } from "@/actions/actions";
 
 export default function CharacterCard({ character, favorites, setFavorites }: { character: Character, favorites: number[], setFavorites: (favorites: number[]) => void }) {
     const handleFavorite = (characterId: number) => {
