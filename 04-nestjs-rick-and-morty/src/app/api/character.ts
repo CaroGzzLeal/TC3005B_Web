@@ -1,42 +1,38 @@
-
 import { z } from 'zod'
 
 export const ZCharacter = z.object({
-    id: z.number(),
+  id: z.number(),
+  name: z.string(),
+  status: z.string(),
+  species: z.string(),
+  type: z.string(),
+  gender: z.string(),
+  origin: z.object({
     name: z.string(),
-    status: z.string(),
-    species: z.string(),
-    type: z.string(),
-    gender: z.string(),
-    origin: z.object({
-        name: z.string(),
-        url: z.string(),
-    }),
-    location: z.object({
-        name: z.string(),
-        url: z.string(),
-    }),
-    image : z.string(),
-    episode: z.array(z.string()),
     url: z.string(),
-    created: z.string(),
+  }),
+  location: z.object({
+    name: z.string(),
+    url: z.string(),
+  }),
+  image: z.string(),
+  episode: z.array(z.string()),
+  url: z.string(),
+  created: z.string(),
 })
 
 export const ZCharacterResponse = z.object({
-    info: z.object({
-      count: z.number(),
-      pages: z.number(),
-      next: z.string(),
-      prev: z.string(),
-    }),
-    results: z.array(ZCharacter)
+  info: z.object({
+    count: z.number(),
+    pages: z.number(),
+    next: z.string(),
+    prev: z.string(),
+  }),
+  results: z.array(ZCharacter),
 })
 
 export type CharacterResponse = z.infer<typeof ZCharacterResponse>
 export type Character = z.infer<typeof ZCharacter>
-
-
-
 
 /*
 
