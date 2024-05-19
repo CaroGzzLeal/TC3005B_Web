@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { getCharacters, goToCharacters, goToFavorites } from '@/actions/actions'
+import { getCharacters } from '@/actions/actions'
 import { CharacterResponse } from './api/character'
 import CharacterCard from './components/CharacterCard'
+import Header from './components/Header'
 
 export default function Page() {
   const [characters, setCharacters] = useState<CharacterResponse | null>(null)
@@ -39,29 +40,20 @@ export default function Page() {
   }, [favorites])
 
   return (
-    <div className='min-h-screen bg-gray-100 p-5'>
-      <header className='pb-5'>
-        <div className='flex justify-between bg-gray-800 p-4 text-white'>
-          <button onClick={() => goToCharacters()} className='mr-auto'>
-            Characters
-          </button>
-
-          <button onClick={() => goToFavorites()} className='ml-auto'>
-            Favorites
-          </button>
+    <>
+      <Header />
+      <div className='min-h-screen bg-gray-100 p-5'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+          {characters?.results.map((character) => (
+            <CharacterCard
+              key={character.id}
+              character={character}
+              favorites={favorites}
+              setFavorites={setFavorites}
+            />
+          ))}
         </div>
-      </header>
-
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-        {characters?.results.map((character) => (
-          <CharacterCard
-            key={character.id}
-            character={character}
-            favorites={favorites}
-            setFavorites={setFavorites}
-          />
-        ))}
       </div>
-    </div>
+    </>
   )
 }

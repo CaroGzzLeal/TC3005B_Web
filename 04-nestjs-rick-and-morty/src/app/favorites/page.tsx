@@ -1,13 +1,10 @@
 'use client'
 
-import {
-  goToCharacters,
-  goToFavorites,
-  getCharactersByIds,
-} from '@/actions/actions'
+import { getCharactersByIds } from '@/actions/actions'
 import { Character } from '../api/character'
 import { useState, useEffect } from 'react'
 import CharacterCard from '../components/CharacterCard'
+import Header from '../components/Header'
 
 export default function Page() {
   const [favorites, setFavorites] = useState<number[]>([])
@@ -40,20 +37,10 @@ export default function Page() {
   }, [favorites])
 
   return (
-    <div className='min-h-screen bg-gray-100 p-5'>
-      <header className='pb-5'>
-        <div className='flex justify-between bg-gray-800 p-4 text-white'>
-          <button onClick={() => goToCharacters()} className='mr-auto'>
-            Characters
-          </button>
+    <>
+      <Header />
 
-          <button onClick={() => goToFavorites()} className='ml-auto'>
-            Favorites
-          </button>
-        </div>
-      </header>
-
-      <div>
+      <div className='bg-gray-100'>
         {favorites.length == 0 && (
           <h1 className='ml-5 text-4xl text-black'>
             You have no favorite characters selected
@@ -67,7 +54,7 @@ export default function Page() {
             setFavorites={setFavorites}
           />
         ) : (
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+          <div className='grid grid-cols-1 gap-4 bg-gray-100 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
             {characters?.map(
               (character) =>
                 favorites.find((id) => id === character.id) && (
@@ -82,6 +69,6 @@ export default function Page() {
           </div>
         )}
       </div>
-    </div>
+    </>
   )
 }
