@@ -3,8 +3,12 @@
 import { redirect } from 'next/navigation'
 import { Character, CharacterResponse } from '@/app/api/character'
 
-export async function getCharacters(): Promise<CharacterResponse> {
-  const res = await fetch('https://rickandmortyapi.com/api/character')
+export async function getCharacters(
+  page: number = 1,
+): Promise<CharacterResponse> {
+  const res = await fetch(
+    `https://rickandmortyapi.com/api/character?page=${page}`,
+  )
   return res.json()
 }
 
