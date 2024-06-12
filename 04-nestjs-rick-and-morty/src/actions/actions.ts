@@ -2,6 +2,25 @@
 
 import { redirect } from 'next/navigation'
 import { Character, CharacterResponse } from '@/app/api/character'
+import { db, users, favorites } from '@/database/schema'
+import { eq } from 'drizzle-orm'
+
+export async function getUserId(email: string) {
+  const checkUser = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.email, email))
+
+  return checkUser[0].id
+}
+
+export async function loadFavorites(userId: string) {
+  const favorite = await db
+    .select({ characterId: favorites.characterId })
+    .from(favorites)
+    .where(eq(favorites.userId, userId))
+  return favorite[0].characterId.split(',').map(Number)
+}
 
 export async function getCharacters(
   page: number = 1,
@@ -35,7 +54,7 @@ export async function getCharactersByIds(
 }
 
 export async function goToCharacters() {
-  redirect('/')
+  redirect('/characters')
 }
 
 export async function goToFavorites() {
@@ -44,4 +63,8 @@ export async function goToFavorites() {
 
 export async function goToCharacter(id: number) {
   redirect(`/character/${id}`)
+}
+
+export async function goToSignIn() {
+  redirect(`/`)
 }

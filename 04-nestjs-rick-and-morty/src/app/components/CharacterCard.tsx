@@ -1,21 +1,34 @@
+'use client'
+
 import { Character } from '../api/character'
 import Image from 'next/image'
-import { goToCharacter } from '@/actions/actions'
+import { goToCharacter, getUserId } from '@/actions/actions'
+import { updateFavorites } from '@/utils/dbCalls'
+import { getSession } from 'next-auth/react'
+import { useState } from 'react'
 
 export default function CharacterCard({
   character,
   favorites,
-  setFavorites,
 }: {
   character: Character
   favorites: number[]
-  setFavorites: (favorites: number[]) => void
 }) {
-  const handleFavorite = (characterId: number) => {
-    if (favorites.find((id) => id === characterId)) {
-      setFavorites(favorites.filter((id) => id !== characterId))
+  const [favorite, setFavorite] = useState<number[]>(favorites)
+
+  const handleFavorite = async (characterId: number) => {
+    const session = await getSession()
+    const userId = await getUserId(session?.user?.email ?? '')
+
+    if (favorite.find((id) => id === characterId)) {
+      setFavorite(favorite.filter((id) => id !== characterId))
+      updateFavorites(
+        userId,
+        favorite.filter((id) => id !== characterId).toString(),
+      )
     } else {
-      setFavorites([...favorites, characterId])
+      setFavorite([...favorite, characterId])
+      updateFavorites(userId, [...favorite, characterId].toString())
     }
   }
 
@@ -44,7 +57,7 @@ export default function CharacterCard({
           <Image
             alt='Favorite'
             src={
-              favorites.find((id) => id === character.id)
+              favorite.find((id) => id === character.id)
                 ? '/filled_star.png'
                 : '/star.png'
             }
