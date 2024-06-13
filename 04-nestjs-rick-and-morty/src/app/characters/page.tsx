@@ -1,5 +1,4 @@
 import Header from '../components/Header'
-import Footer from '../components/Footer'
 import Characters from '../components/Characters'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
@@ -40,8 +39,6 @@ export default async function Page() {
       <div className='min-h-screen bg-gray-100 p-5'>
         <Characters />
       </div>
-
-      <Footer />
     </>
   )
 }
