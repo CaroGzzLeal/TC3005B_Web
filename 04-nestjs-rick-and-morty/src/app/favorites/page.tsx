@@ -2,6 +2,7 @@ import Favorites from '../components/Favorites'
 import Header from '../components/Header'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
+import Footer from '../components/Footer'
 
 export default async function Page() {
   const session = await getServerSession()
@@ -16,6 +17,7 @@ export default async function Page() {
       <div className='min-h-screen bg-gray-100 p-5'>
         <Favorites />
       </div>
+      <Footer />
     </>
   )
 }
