@@ -1,12 +1,16 @@
 'use client'
-import { FaGithub, FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa'
+//import { FaGithub, FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa'
 import React from 'react'
 
 export default function Footer() {
   return (
     <footer className=' p-4 text-center'>
       <p>Created by Carolina Gonzalez Leal ©</p>
-      <p>Feel free to contact me:</p>
+    </footer>
+  )
+}
+
+/*
       <div className='flex justify-center space-x-4'>
         <a
           href='https://www.linkedin.com/in/carolina-nicole-gonzalez-leal-4b961524b/'
@@ -30,6 +34,4 @@ export default function Footer() {
           <FaWhatsapp size={24} />
         </a>
       </div>
-    </footer>
-  )
-}
+*/
