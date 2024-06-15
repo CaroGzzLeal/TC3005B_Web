@@ -19,6 +19,15 @@ export async function loadFavorites(userId: string) {
     .select({ characterId: favorites.characterId })
     .from(favorites)
     .where(eq(favorites.userId, userId))
+
+  if (favorite.length === 0) {
+    return []
+  }
+
+  if (favorite[0].characterId === '') {
+    return []
+  }
+
   return favorite[0].characterId.split(',').map(Number)
 }
 

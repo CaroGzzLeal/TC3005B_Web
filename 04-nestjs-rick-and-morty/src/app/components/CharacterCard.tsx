@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { goToCharacter, getUserId } from '@/actions/actions'
 import { updateFavorites } from '@/utils/dbCalls'
 import { getSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function CharacterCard({
   character,
@@ -14,22 +14,31 @@ export default function CharacterCard({
   character: Character
   favorites: number[]
 }) {
-  const [favorite, setFavorite] = useState<number[]>(favorites)
+  const [favorite, setFavorite] = useState<number[]>([])
 
-  const handleFavorite = async (characterId: number) => {
+  useEffect(() => {
+    setFavorite(favorites)
+  }, [favorites])
+
+  const handleFavorite = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    characterId: number,
+  ) => {
+    e.preventDefault()
+
     const session = await getSession()
     const userId = await getUserId(session?.user?.email ?? '')
 
-    if (favorite.find((id) => id === characterId)) {
-      setFavorite(favorite.filter((id) => id !== characterId))
-      updateFavorites(
-        userId,
-        favorite.filter((id) => id !== characterId).toString(),
-      )
+    let newFavorite: number[]
+
+    if (favorite.includes(characterId)) {
+      newFavorite = favorite.filter((id) => id !== characterId)
     } else {
-      setFavorite([...favorite, characterId])
-      updateFavorites(userId, [...favorite, characterId].toString())
+      newFavorite = [...favorite, characterId]
     }
+
+    setFavorite(newFavorite)
+    await updateFavorites(userId, characterId.toString())
   }
 
   return (
@@ -50,16 +59,14 @@ export default function CharacterCard({
         </button>
 
         <button
-          onClick={() => {
-            handleFavorite(character.id)
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            handleFavorite(e, character.id)
           }}
         >
           <Image
             alt='Favorite'
             src={
-              favorite.find((id) => id === character.id)
-                ? '/filled_star.png'
-                : '/star.png'
+              favorite.includes(character.id) ? '/filled_star.png' : '/star.png'
             }
             width={30}
             height={30}

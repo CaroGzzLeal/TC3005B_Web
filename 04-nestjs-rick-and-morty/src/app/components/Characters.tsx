@@ -1,10 +1,9 @@
 import React from 'react'
 import { getCharacters, loadFavorites } from '@/actions/actions'
-
 import CharacterCard from '../components/CharacterCard'
-import Pagination from '../components/Pagination'
 import { getServerSession } from 'next-auth'
 import { getUserId } from '@/actions/actions'
+import Footer from './Footer'
 
 export default async function Characters() {
   const session = await getServerSession()
@@ -23,12 +22,7 @@ export default async function Characters() {
           />
         ))}
       </div>
-
-      <Pagination
-        currentPage={1}
-        totalPages={characters?.info.pages || 1}
-        // onPageChange={(page) => setPage(page)}
-      />
+      <Footer />
     </>
   )
 }
